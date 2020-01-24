@@ -37,11 +37,15 @@ class InstabotApplicationTests {
 		loader.setProfile();
 		driver = loader.getDriver();
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-		driver.navigate().to("https://www.instagram.com/petar.dj/");
-		driver.manage().window().fullscreen();
-		driver.findElements(By.className("v1Nh3")).get(3).click();
-		driver.findElement(By.className("fr66n")).click();
-//		loader.tearDown();
+		driver.navigate().to("google.com");
+//		driver.navigate().to("https://www.instagram.com/d_biilja/");
+//		driver.manage().window().fullscreen();
+//		for(WebElement wd : driver.findElements(By.className("v1Nh3"))){
+//			wd.click();
+//			driver.findElement(By.className("fr66n")).click();
+//			driver.findElement(By.tagName("body")).sendKeys(Keys.ESCAPE);
+//		}
+////		loader.tearDown();
 	}
 
 }

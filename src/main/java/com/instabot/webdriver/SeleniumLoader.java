@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,15 +17,21 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SeleniumLoader {
-    private final String CHROMEDRIVER_EXE = "../../../src/main/resources/chromedriver.exe";
+
+    @Value("${chrome-driver}")
+    private String CHROMEDRIVER_EXE;
+    @Value("${user-profile}")
+    private String USER_PROFILE;
     protected WebDriver driver;
 
     public void setProfile(){
-        String exePath = "D:\\Repositories\\instabot\\src\\main\\resources\\chromedriver.exe";
-        System.setProperty("webdriver.chrome.driver", exePath);
+        System.out.println(CHROMEDRIVER_EXE +"\n" + USER_PROFILE);
+//        System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_EXE);
+        ChromeDriverService chSvc = new ChromeDriverService.Builder()
+                .usingDriverExecutable(new File(CHROMEDRIVER_EXE)).usingAnyFreePort().build();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("user-data-dir=C:\\Users\\aleksa.milenkovic\\AppData\\Local\\Google\\Chrome\\User Data");
-        this.driver = new ChromeDriver(options);
+        options.addArguments("user-data-dir =" + USER_PROFILE);
+        this.driver = new ChromeDriver(chSvc, options);
         System.out.println("Chrome Driver loaded, using local profile.");
 
     }
