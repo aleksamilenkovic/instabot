@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.instabot.util.Utils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -18,14 +20,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class SeleniumLoader {
 
+    private WebDriver driver;
+
     @Value("${chrome-driver}")
     private String CHROMEDRIVER_EXE;
     @Value("${user-profile}")
     private String USER_PROFILE;
-    protected WebDriver driver;
 
     public void setProfile(){
-        System.out.println(CHROMEDRIVER_EXE +"\n" + USER_PROFILE);
 //        System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_EXE);
         ChromeDriverService chSvc = new ChromeDriverService.Builder()
                 .usingDriverExecutable(new File(CHROMEDRIVER_EXE)).usingAnyFreePort().build();
@@ -33,15 +35,14 @@ public class SeleniumLoader {
         options.addArguments("user-data-dir =" + USER_PROFILE);
         this.driver = new ChromeDriver(chSvc, options);
         System.out.println("Chrome Driver loaded, using local profile.");
-
     }
 
     public WebDriver getDriver(){
         return driver;
     }
 
-    public WebDriver setUp() {
-        String driverFile = findFile();
+    public void setUp() {
+        String driverFile = Utils.findFile("./chromedriver.exe");
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         ChromeDriverService service = new ChromeDriverService.Builder()
                 .usingDriverExecutable(new File(driverFile))
@@ -61,15 +62,9 @@ public class SeleniumLoader {
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.merge(capabilities);
         this.driver = new ChromeDriver(service, options);
-        return this.driver;
     }
 
-    private String findFile() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL url = classLoader.getResource(CHROMEDRIVER_EXE);
-        System.out.println(url.getPath());
-        return url.getFile();
-    }
+
 
     public void tearDown() {
         if (driver != null) {
