@@ -17,12 +17,11 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Autowired
     private InstaService instaService;
 
-    @Scheduled(cron = "0 0 12 * * ?")
+    @Scheduled(cron = "0 20 12 * * ?")
     @Override
     public void startInstaLikeService() {
         log.info("Starting likes ...");
         instaService.startLikes();
-
         log.info("Liking finished for the : " + Calendar.getInstance().getTime());
     }
 

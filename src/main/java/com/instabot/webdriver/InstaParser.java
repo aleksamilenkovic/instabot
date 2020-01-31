@@ -1,5 +1,6 @@
 package com.instabot.webdriver;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
  * @author lezalekss
  */
 @Component
+@Slf4j
 public class InstaParser {
     private final String urlTemplate = "https://www.instagram.com/%s";
     private final String loginUrl = "https://www.instagram.com/accounts/login/";
@@ -29,6 +31,7 @@ public class InstaParser {
     }
 
     public void likePosts(WebDriver driver, String profileUsername){
+        log.info("Starting likes for profile: " + profileUsername);
         String profileUrl = String.format(urlTemplate, profileUsername);
         driver.get(profileUrl);
         for(WebElement we : driver.findElements(By.className("v1Nh3"))){
