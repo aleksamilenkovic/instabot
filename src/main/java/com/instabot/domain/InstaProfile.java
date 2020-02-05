@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -17,5 +18,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "insta_profile")
 public class InstaProfile {
     @Field("username")
+    @Indexed(unique=true)
     private String username;
 }
