@@ -31,10 +31,13 @@ public class InstaParser {
     }
 
     public void likePosts(WebDriver driver, String profileUsername){
+        int i =0;
+        int likes=0;
         log.info("Starting likes for profile: " + profileUsername);
         String profileUrl = String.format(urlTemplate, profileUsername);
         driver.get(profileUrl);
         for(WebElement we : driver.findElements(By.className("v1Nh3"))){
+            log.info("Liking post: " + ++i);
             we.click();
             WebElement likeSpan = driver.findElement(By.className("fr66n"));
             if(!isPostLiked(likeSpan))
