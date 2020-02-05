@@ -13,4 +13,5 @@ public class ProfileStats {
     private int following;
     private int posts;
     private double averageLikes;
+
 }

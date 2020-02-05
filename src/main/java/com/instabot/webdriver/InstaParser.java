@@ -1,11 +1,12 @@
 package com.instabot.webdriver;
 
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author lezalekss
@@ -13,22 +14,22 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class InstaParser {
-    private final String urlTemplate = "https://www.instagram.com/%s";
-    private final String loginUrl = "https://www.instagram.com/accounts/login/";
+	private final String urlTemplate = "https://www.instagram.com/%s";
+	private final String loginUrl = "https://www.instagram.com/accounts/login/";
 
-    public void login(WebDriver driver, String username, String password){
-        driver.get(loginUrl);
-        WebElement usernameInput = driver.findElement(By.name("username"));
-        WebElement passwordInput = driver.findElement(By.name("password"));
-        usernameInput.sendKeys(username);
-        passwordInput.sendKeys(password);
-        passwordInput.sendKeys(Keys.ENTER);
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+	public void login(WebDriver driver, String username, String password) {
+		driver.get(loginUrl);
+		WebElement usernameInput = driver.findElement(By.name("username"));
+		WebElement passwordInput = driver.findElement(By.name("password"));
+		usernameInput.sendKeys(username);
+		passwordInput.sendKeys(password);
+		passwordInput.sendKeys(Keys.ENTER);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 
     public void likePosts(WebDriver driver, String profileUsername){
         int i =0;
@@ -46,9 +47,10 @@ public class InstaParser {
         }
     }
 
-    private boolean isPostLiked(WebElement likeSpan){
-        String svg = likeSpan.findElement(By.className("_8-yf5")).getAttribute("aria-label");
-        return !svg.equals("Like");
-    }
+
+	private boolean isPostLiked(WebElement likeSpan) {
+		String svg = likeSpan.findElement(By.className("_8-yf5")).getAttribute("aria-label");
+		return !svg.equals("Like");
+	}
 
 }
