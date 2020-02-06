@@ -16,8 +16,10 @@ import org.springframework.data.mongodb.core.index.Indexed;
 @SuperBuilder
 @Document(collection = "profile")
 public class InstaProfile {
-    @Field("username")
     @Id
-    private String username;
+    private String id;
 
+    @Field("username")
+    @Indexed(unique=true)
+    private String username;
 }

@@ -54,9 +54,10 @@ public class InstaParser {
 	public ProfileStats collectStats(WebDriver driver, InstaProfile profile) {
 		int postsNumber = 0, likes=0, followers=0, following=0, posts=0; // driver will load first 12 posts or less
 		String profileUrl = String.format(urlTemplate, profile.getUsername());
+		System.out.println(profileUrl);
 		driver.get(profileUrl);
-		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-		List<WebElement> profileInfos =  driver.findElements(By.className("g47SY"));
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		List<WebElement> profileInfos = driver.findElements(By.className("g47SY"));
 		posts = Utils.parseInt(profileInfos.get(0).getText());
 		followers = Utils.parseInt(profileInfos.get(1).getText());
 		following = Utils.parseInt(profileInfos.get(2).getText());
@@ -77,7 +78,7 @@ public class InstaParser {
 			driver.findElement(By.tagName("body")).sendKeys(Keys.ESCAPE);
 		}
 		ProfileStats stats =
-				ProfileStats.builder().posts(posts).followers(followers).following(following).averageLikes((double)likes/postsNumber).time(LocalDate.now()).profile(profile).build();
+				ProfileStats.builder().posts(posts).followers(followers).following(following).averageLikes((double)likes/postsNumber).time(Utils.fetchCurrentDate()).profile(profile).build();
 		return stats;
 	}
 

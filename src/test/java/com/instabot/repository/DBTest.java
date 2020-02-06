@@ -1,13 +1,13 @@
 package com.instabot.repository;
 
 import com.instabot.InstabotApplicationTests;
-import org.junit.Assert;
+import  org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.instabot.InstaServiceTest;
 import com.instabot.domain.InstaProfile;
-import org.springframework.transaction.annotation.Transactional;
+
+import static org.junit.Assert.*;
 
 
 public class DBTest extends InstabotApplicationTests {
@@ -17,12 +17,18 @@ public class DBTest extends InstabotApplicationTests {
 	@Test
 	public void testConnection() {
 		InstaProfile profile = profileRepo.findByUsername("lezalekss");
-		Assert.assertEquals("lezalekss", profile.getUsername());
+		assertEquals("lezalekss", profile.getUsername());
 	}
 
 	@Test
 	public void testInsertNewProfile(){
-		InstaProfile profile = InstaProfile.builder().username("therock").build();
-		Assert.assertEquals("therock", profileRepo.save(profile).getUsername());
+		InstaProfile profile = InstaProfile.builder().username("TEST_PROFILE").build();
+		// saving profile into db
+		profileRepo.save(profile);
+		// fetch profile from db and check if equals
+		assertEquals("TEST_PROFILE", profileRepo.findByUsername("TEST_PROFILE").getUsername());
+		// deleting profile
+		profileRepo.delete(profile);
 	}
+
 }

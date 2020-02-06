@@ -8,6 +8,9 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,5 +43,11 @@ public class Utils {
             System.out.println("Couldn't format to integer: "+likesXfollowers);
         }
         return i;
+    }
+
+    public static LocalDateTime fetchCurrentDate(){
+        ZoneId zoneId = ZoneId.of("Europe/Paris");
+        System.out.println(LocalDateTime.now());
+        return LocalDateTime.now(zoneId);
     }
 }
