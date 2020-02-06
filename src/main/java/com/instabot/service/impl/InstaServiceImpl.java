@@ -1,16 +1,17 @@
 package com.instabot.service.impl;
 
+import com.instabot.domain.InstaProfile;
+import com.instabot.domain.ProfileStats;
+import com.instabot.repository.InstaProfileRepository;
+import com.instabot.repository.ProfileStatsRepository;
 import com.instabot.service.InstaService;
-import com.instabot.util.Utils;
 import com.instabot.webdriver.InstaParser;
 import com.instabot.webdriver.SeleniumLoader;
-import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -27,31 +28,43 @@ public class InstaServiceImpl implements InstaService {
     private String username;
     @Value("${profile-password}")
     private String password;
-    private List<String> profiles;
     @Autowired
     private SeleniumLoader loader;
     @Autowired
     private InstaParser instaParser;
-    private WebDriver driver;
+    @Autowired
+    private InstaProfileRepository profileRepository;
+    @Autowired
+    private ProfileStatsRepository profileStatsRepository;
 
     @Override
     public void startLikes() {
-        loader.setUp();
-        driver = loader.getDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS) ;
-        profiles = getProfiles();
+        WebDriver driver = loader.setUp();
         instaParser.login(driver, username, password);
-        profiles.forEach(profile-> instaParser.likePosts(driver, profile));
-        loader.tearDown();
+        getProfiles().forEach(profile-> instaParser.likePosts(driver, profile.getUsername()));
+        loader.tearDown(driver);
     }
 
-    private List<String> getProfiles() {
-        List<String> profiles = new ArrayList<>();
-        try {
+    @Override
+    public void collectStats() {
+        WebDriver driver = loader.setUp();
+        instaParser.login(driver, username, password);
+        getProfiles().forEach(profile -> {
+            ProfileStats stats = instaParser.collectStats(driver, profile);
+            profileStatsRepository.save(stats);
+        });
+        loader.tearDown(driver);
+    }
+
+
+    private List<InstaProfile> getProfiles() {
+        List<InstaProfile> profiles = new ArrayList<>();
+       /* try {
             profiles = Utils.readJsonStringArray(profilesJsonFile, "usernames");
         } catch (IOException | ParseException e) {
             e.printStackTrace();
-        }
+        }*/
+        profiles = profileRepository.findAll();
         return profiles;
     }
 

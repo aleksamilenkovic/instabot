@@ -3,6 +3,7 @@ package com.instabot.webdriver;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import com.instabot.util.Utils;
 import org.openqa.selenium.WebDriver;
@@ -19,28 +20,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class SeleniumLoader {
 
-    private WebDriver driver;
-
     @Value("${chrome-driver}")
     private String CHROMEDRIVER_EXE;
     @Value("${user-profile}")
     private String USER_PROFILE;
 
-    public void setProfile(){
+    public WebDriver setProfile(){
+        WebDriver driver;
 //        System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_EXE);
         ChromeDriverService chSvc = new ChromeDriverService.Builder()
                 .usingDriverExecutable(new File(CHROMEDRIVER_EXE)).usingAnyFreePort().build();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("user-data-dir =" + USER_PROFILE);
-        this.driver = new ChromeDriver(chSvc, options);
+        driver = new ChromeDriver(chSvc, options);
         System.out.println("Chrome Driver loaded, using local profile.");
-    }
-
-    public WebDriver getDriver(){
         return driver;
     }
 
-    public void setUp() {
+    public WebDriver setUp() {
+        WebDriver driver;
         String driverFile = Utils.findFile(CHROMEDRIVER_EXE);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         ChromeDriverService service = new ChromeDriverService.Builder()
@@ -60,12 +58,14 @@ public class SeleniumLoader {
         options.addArguments("--disable-gpu"); // applicable to windows os only
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.merge(capabilities);
-        this.driver = new ChromeDriver(service, options);
+        driver = new ChromeDriver(service, options);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        return driver;
     }
 
 
 
-    public void tearDown() {
+    public void tearDown(WebDriver driver) {
         if (driver != null) {
             driver.quit();
         }

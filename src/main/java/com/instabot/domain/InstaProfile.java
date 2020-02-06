@@ -1,5 +1,6 @@
 package com.instabot.domain;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -16,6 +17,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 @Document(collection = "profile")
 public class InstaProfile {
     @Field("username")
-    @Indexed(unique=true)
+    @Id
     private String username;
+
 }

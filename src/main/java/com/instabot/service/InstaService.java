@@ -8,4 +8,5 @@ import java.util.List;
 public interface InstaService {
     void startLikes();
 
+    void collectStats();
 }

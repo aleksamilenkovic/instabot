@@ -31,4 +31,14 @@ public class Utils {
         System.out.println(url.getPath());
         return url.getFile();
     }
+
+    public static int parseInt(String likesXfollowers){
+        int i=0;
+        try{
+            i = Integer.parseInt(likesXfollowers.trim().replaceAll(",","").replaceAll("m","000000"));
+        }catch (NumberFormatException nfe){
+            System.out.println("Couldn't format to integer: "+likesXfollowers);
+        }
+        return i;
+    }
 }
