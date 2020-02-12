@@ -23,4 +23,9 @@ public class InstaServiceTest extends InstabotApplicationTests{
         instaService.startLikes();
 
     }
+
+    @Test
+    public void getLikesAndCommentsViaHover(){
+
+    }
 }

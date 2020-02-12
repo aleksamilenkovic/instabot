@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author lezalekss
@@ -28,6 +29,8 @@ public class ProfileStats {
     private double averageLikes;
     @Field("time")
     private LocalDateTime time;
+    @Field("posts_stats")
+    private List<PostStats> postsStats;
     @DBRef
     private InstaProfile profile;
 }

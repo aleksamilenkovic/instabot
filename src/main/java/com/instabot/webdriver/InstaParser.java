@@ -1,16 +1,20 @@
 package com.instabot.webdriver;
 
 import com.instabot.domain.InstaProfile;
+import com.instabot.domain.PostStats;
 import com.instabot.domain.ProfileStats;
 import com.instabot.util.Utils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * @author lezalekss
@@ -52,7 +56,7 @@ public class InstaParser {
 
 
 	public ProfileStats collectStats(WebDriver driver, InstaProfile profile) {
-		int postsNumber = 0, likes=0, followers=0, following=0, posts=0; // driver will load first 12 posts or less
+		int followers=0, following=0, posts=0; // driver will load first 12 posts or less
 		String profileUrl = String.format(urlTemplate, profile.getUsername());
 		System.out.println(profileUrl);
 		driver.get(profileUrl);
@@ -62,24 +66,39 @@ public class InstaParser {
 		followers = Utils.parseInt(profileInfos.get(1).getText());
 		following = Utils.parseInt(profileInfos.get(2).getText());
 		List<WebElement> postElements = driver.findElements(By.className("v1Nh3"));
-		postsNumber = postElements.size();
+		ProfileStats stats =
+				ProfileStats.builder().posts(posts).followers(followers).following(following).time(Utils.fetchCurrentDate()).profile(profile).build();
+		setPostsStats(postElements, driver, stats);
+		return stats;
+	}
+
+	public void setPostsStats(List<WebElement> postElements, WebDriver driver, ProfileStats stats){
+		Actions action = new Actions(driver);
+		Consumer< By > hover = by -> {
+			action.moveToElement(driver.findElement(by))
+					.perform();
+		};
+		int likes = 0, postsNumber=postElements.size();
+		List<PostStats> postsStats = new ArrayList<>();
 		for(WebElement post : postElements){
-			try {
+			/*try {
 				post.click();
 				driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 				String[] text = driver.findElement(By.className("Nm9Fw")).getText().split(" ");
 				likes += (text[text.length - 2].equals("likes")) ?
 						Utils.parseInt(text[0])
-				    	: Utils.parseInt(text[text.length - 2]) + 1;
+						: Utils.parseInt(text[text.length - 2]) + 1;
 			}catch (NoSuchElementException ex){
 				log.info("Video skipping...");
 				postsNumber--;
 			}
-			driver.findElement(By.tagName("body")).sendKeys(Keys.ESCAPE);
+			driver.findElement(By.tagName("body")).sendKeys(Keys.ESCAPE);*/
+			hover.accept(By.className("qn-0x"));
+			WebElement postHover = driver.findElement(By.className("qn-0x"));
+			System.out.println(postHover.getAttribute("innerHTML"));
 		}
-		ProfileStats stats =
-				ProfileStats.builder().posts(posts).followers(followers).following(following).averageLikes((double)likes/postsNumber).time(Utils.fetchCurrentDate()).profile(profile).build();
-		return stats;
+		stats.setPostsStats(postsStats);
+		stats.setAverageLikes((double)likes/postsNumber);
 	}
 
 	private boolean isPostLiked(WebElement likeSpan) {
