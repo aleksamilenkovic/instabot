@@ -1,11 +1,9 @@
 package com.instabot.service.impl;
 
 import com.instabot.domain.InstaProfile;
-import com.instabot.domain.ProfileStats;
 import com.instabot.repository.InstaProfileRepository;
-import com.instabot.repository.PostStatsRepository;
 import com.instabot.repository.ProfileStatsRepository;
-import com.instabot.service.InstaService;
+import com.instabot.service.InstaScrapperService;
 import com.instabot.webdriver.InstaParser;
 import com.instabot.webdriver.SeleniumLoader;
 import org.openqa.selenium.WebDriver;
@@ -16,14 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-/**
- * @author lezalekss
- */
 
 @Service
-public class InstaServiceImpl implements InstaService {
+public class InstaScrapperServiceImpl implements InstaScrapperService {
     @Value("${profiles-json}")
     private String profilesJsonFile;
     @Value("${profile-username}")
@@ -38,8 +31,6 @@ public class InstaServiceImpl implements InstaService {
     private InstaProfileRepository profileRepository;
     @Autowired
     private ProfileStatsRepository profileStatsRepository;
-    @Autowired
-    private PostStatsRepository postStatsRepository;
 
     @Override
     public void startLikes() {
@@ -56,9 +47,6 @@ public class InstaServiceImpl implements InstaService {
         instaParser.login(driver, username, password);
         getProfiles().stream().map(profile -> instaParser.collectStats(driver, profile)).forEach(stats -> {
             profileStatsRepository.save(stats);
-            stats.getPostsStats().forEach(postStats -> {
-                postStatsRepository.save(postStats);
-            });
         });
         loader.tearDown(driver);
     }
@@ -74,6 +62,4 @@ public class InstaServiceImpl implements InstaService {
         profiles = profileRepository.findAll();
         return profiles;
     }
-
-
 }

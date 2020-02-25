@@ -1,12 +1,10 @@
 package com.instabot.service;
 
-import java.util.List;
 
-/**
- * @author lezalekss
- */
-public interface InstaService {
+public interface InstaScrapperService{
+
     void startLikes();
 
     void collectStats();
+
 }

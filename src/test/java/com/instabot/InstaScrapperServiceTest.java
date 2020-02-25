@@ -1,33 +1,25 @@
 package com.instabot;
 
-import com.instabot.service.InstaService;
+import com.instabot.service.InstaScrapperService;
 import com.instabot.webdriver.SeleniumLoader;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.concurrent.TimeUnit;
-
-
-/**
- * @author lezalekss
- */
-
-public class InstaServiceTest extends InstabotApplicationTests{
+public class InstaScrapperServiceTest extends InstabotApplicationTests{
     @Autowired
-    private InstaService instaService;
+    private InstaScrapperService scrapperService;
     @Autowired
     private SeleniumLoader loader;
 
     @Test
     public void collectStats(){
-        instaService.collectStats();
+        scrapperService.collectStats();
     }
 
     @Test
     public void instaServiceTest(){
-        instaService.startLikes();
+        scrapperService.startLikes();
 
     }
 

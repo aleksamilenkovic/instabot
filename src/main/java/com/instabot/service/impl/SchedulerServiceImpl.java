@@ -1,6 +1,6 @@
 package com.instabot.service.impl;
 
-import com.instabot.service.InstaService;
+import com.instabot.service.InstaScrapperService;
 import com.instabot.service.SchedulerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.Date;
 @Slf4j
 public class SchedulerServiceImpl implements SchedulerService {
     @Autowired
-    private InstaService instaService;
+    private InstaScrapperService instaService;
 
     @Scheduled(cron = "0 0 12 * * ?")
     @Override
