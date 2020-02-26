@@ -33,7 +33,7 @@ public class InstaParser {
 		passwordInput.sendKeys(password);
 		passwordInput.sendKeys(Keys.ENTER);
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(2500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -60,7 +60,7 @@ public class InstaParser {
 		String profileUrl = String.format(urlTemplate, profile.getUsername());
 		log.info(profileUrl);
 		driver.get(profileUrl);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		List<WebElement> profileInfos = driver.findElements(By.className("g47SY"));
 		posts = Utils.parseInt(profileInfos.get(0).getText());
 		followers = Utils.parseInt(profileInfos.get(1).getText());

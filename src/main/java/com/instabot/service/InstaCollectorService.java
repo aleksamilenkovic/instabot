@@ -12,6 +12,8 @@ public interface InstaCollectorService {
 
     List<InstaProfile> getAllProfiles();
 
-    List<ProfileStats> getProfileStatsForProfile(String username);
+    List<ProfileStats> getAllProfileStatsForProfile(String username);
+
+    ProfileStats getProfileStatsForProfile(String username);
 
 }

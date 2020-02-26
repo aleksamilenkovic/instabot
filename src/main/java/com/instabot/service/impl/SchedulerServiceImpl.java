@@ -25,7 +25,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         log.info("Liking finished at the : " + Calendar.getInstance().getTime());
     }
 
-    @Scheduled(cron = "0 20 12 * * ?")
+    @Scheduled(cron = "0 10 12 * * ?")
     @Override
     public void startCollectingStats() {
         log.info("Started to collect statistic ...");

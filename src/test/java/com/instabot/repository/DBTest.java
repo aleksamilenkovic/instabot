@@ -26,13 +26,13 @@ public class DBTest extends InstabotApplicationTests {
 
 	@Test
 	public void testInsertNewProfile(){
-		InstaProfile profile = InstaProfile.builder().username("TEST_PROFILE").build();
+		InstaProfile profile = InstaProfile.builder().username("kostasavic").followers(557).following(555).posts(15).build();
 		// saving profile into db
 		profileRepo.save(profile);
 		// fetch profile from db and check if equals
 		assertEquals("TEST_PROFILE", profileRepo.findByUsername("TEST_PROFILE").getUsername());
 		// deleting profile
-		profileRepo.delete(profile);
+//		profileRepo.delete(profile);
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class DBTest extends InstabotApplicationTests {
 	@Test
 	public void findTopByProfile(){
 		InstaProfile ip = profileRepo.findByUsername("lezalekss");
-		ProfileStats ps = statsRepository.findTopByProfileOrderByTimeDesc(ip);
+		ProfileStats ps = statsRepository.findTopByProfile_UsernameOrderByTimeDesc("lezalekss");
 		System.out.println(ps.toString());
 	}
 }

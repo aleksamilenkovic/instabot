@@ -6,13 +6,16 @@ import com.instabot.repository.InstaProfileRepository;
 import com.instabot.repository.ProfileStatsRepository;
 import com.instabot.service.InstaCollectorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author lezalekss
  */
+@Service
 public class InstaCollectorServiceImpl implements InstaCollectorService {
+
     @Autowired
     private InstaProfileRepository instaProfileRepository;
     @Autowired
@@ -24,7 +27,14 @@ public class InstaCollectorServiceImpl implements InstaCollectorService {
     }
 
     @Override
-    public List<ProfileStats> getProfileStatsForProfile(String username) {
-        return null;
+    public List<ProfileStats> getAllProfileStatsForProfile(String username) {
+        return profileStatsRepository.findAllByProfile_UsernameOrderByTimeDesc(username);
     }
+
+    @Override
+    public ProfileStats getProfileStatsForProfile(String username) {
+        return profileStatsRepository.findTopByProfile_UsernameOrderByTimeDesc(username);
+    }
+
+
 }
