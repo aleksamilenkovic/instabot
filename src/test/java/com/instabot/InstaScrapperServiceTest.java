@@ -6,25 +6,20 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-/**
- * @author lezalekss
- */
-
 public class InstaScrapperServiceTest extends InstabotApplicationTests{
     @Autowired
-    private InstaScrapperService instaScrapperService;
+    private InstaScrapperService scrapperService;
     @Autowired
     private SeleniumLoader loader;
 
     @Test
     public void collectStats(){
-        instaScrapperService.collectStats();
+        scrapperService.collectStats();
     }
 
     @Test
     public void instaServiceTest(){
-        instaScrapperService.startLikes();
+        scrapperService.startLikes();
 
     }
 

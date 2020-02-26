@@ -15,12 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author lezalekss
- */
-
 @Service
-public class InstaScrapperScrapperServiceImpl implements InstaScrapperService {
+public class InstaScrapperServiceImpl implements InstaScrapperService {
     @Value("${profiles-json}")
     private String profilesJsonFile;
     @Value("${profile-username}")
@@ -66,6 +62,4 @@ public class InstaScrapperScrapperServiceImpl implements InstaScrapperService {
         profiles = profileRepository.findAll();
         return profiles;
     }
-
-
 }

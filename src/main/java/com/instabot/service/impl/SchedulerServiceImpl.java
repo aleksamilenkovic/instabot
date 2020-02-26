@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author lezalekss
@@ -14,13 +15,13 @@ import java.util.Calendar;
 @Slf4j
 public class SchedulerServiceImpl implements SchedulerService {
     @Autowired
-    private InstaScrapperService instaScrapperService;
+    private InstaScrapperService instaService;
 
     @Scheduled(cron = "0 0 12 * * ?")
     @Override
     public void startInstaLikeService() {
         log.info("Starting likes ...");
-        instaScrapperService.startLikes();
+        instaService.startLikes();
         log.info("Liking finished at the : " + Calendar.getInstance().getTime());
     }
 
@@ -28,7 +29,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Override
     public void startCollectingStats() {
         log.info("Started to collect statistic ...");
-        instaScrapperService.collectStats();
+        instaService.collectStats();
         log.info("Collecting statistic finished at the : " + Calendar.getInstance().getTime());
     }
 
