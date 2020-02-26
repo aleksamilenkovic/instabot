@@ -22,4 +22,11 @@ public class InstaProfile {
     @Field("username")
     @Indexed(unique=true)
     private String username;
+    // these fields are current state and updated daily
+    @Field("followers")
+    private int followers;
+    @Field("following")
+    private int following;
+    @Field("posts")
+    private int posts;
 }

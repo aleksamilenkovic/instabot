@@ -1,13 +1,12 @@
 package com.instabot.service.impl;
 
-import com.instabot.service.InstaService;
+import com.instabot.service.InstaScrapperService;
 import com.instabot.service.SchedulerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * @author lezalekss
@@ -15,13 +14,13 @@ import java.util.Date;
 @Slf4j
 public class SchedulerServiceImpl implements SchedulerService {
     @Autowired
-    private InstaService instaService;
+    private InstaScrapperService instaScrapperService;
 
     @Scheduled(cron = "0 0 12 * * ?")
     @Override
     public void startInstaLikeService() {
         log.info("Starting likes ...");
-        instaService.startLikes();
+        instaScrapperService.startLikes();
         log.info("Liking finished at the : " + Calendar.getInstance().getTime());
     }
 
@@ -29,7 +28,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Override
     public void startCollectingStats() {
         log.info("Started to collect statistic ...");
-        instaService.collectStats();
+        instaScrapperService.collectStats();
         log.info("Collecting statistic finished at the : " + Calendar.getInstance().getTime());
     }
 

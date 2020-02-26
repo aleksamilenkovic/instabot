@@ -55,4 +55,7 @@ public class Utils {
         return LocalDateTime.now(zoneId);
     }
 
+    public static LocalDateTime getDateFromString(String date){
+        return LocalDateTime.parse(date.substring(0, date.length()-1));
+    }
 }

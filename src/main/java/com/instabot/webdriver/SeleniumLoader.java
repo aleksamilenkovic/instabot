@@ -40,7 +40,8 @@ public class SeleniumLoader {
     public WebDriver setUp() {
         WebDriver driver;
         String driverFile = Utils.findFile(CHROMEDRIVER_EXE);
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        System.setProperty("webdriver.chrome.driver", driverFile);
+        /*DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         ChromeDriverService service = new ChromeDriverService.Builder()
                 .usingDriverExecutable(new File(driverFile))
                 .build();
@@ -57,8 +58,8 @@ public class SeleniumLoader {
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-gpu"); // applicable to windows os only
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
-        options.merge(capabilities);
-        driver = new ChromeDriver(service, options);
+        options.merge(capabilities);*/
+        driver = new ChromeDriver(/*service, options*/);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
     }

@@ -43,4 +43,18 @@ public class DBTest extends InstabotApplicationTests {
 			System.out.println(s.getProfile().getUsername());
 		});
 	}
+
+	@Test
+	public void findAllProfileStats(){
+		List<ProfileStats> stats = statsRepository.findAll();
+		stats.forEach(System.out::println);
+	}
+
+
+	@Test
+	public void findTopByProfile(){
+		InstaProfile ip = profileRepo.findByUsername("lezalekss");
+		ProfileStats ps = statsRepository.findTopByProfileOrderByTimeDesc(ip);
+		System.out.println(ps.toString());
+	}
 }
