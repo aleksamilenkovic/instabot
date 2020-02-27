@@ -46,6 +46,7 @@ public class InstaScrapperServiceImpl implements InstaScrapperService {
         WebDriver driver = loader.setUp();
         instaParser.login(driver, username, password);
         getProfiles().stream().map(profile -> instaParser.collectStats(driver, profile)).forEach(stats -> {
+            profileRepository.save(stats.getProfile());
             profileStatsRepository.save(stats);
         });
         loader.tearDown(driver);

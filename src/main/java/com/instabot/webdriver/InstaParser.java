@@ -39,6 +39,15 @@ public class InstaParser {
 		}
 	}
 
+	public InstaProfile parseInstaProfile(WebDriver driver, String profileUsername, Boolean toFollowProfile){
+		log.info("Starting to parse insta profile: " + profileUsername);
+		String profileUrl = String.format(urlTemplate, profileUsername);
+		driver.get(profileUrl);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+		return null;
+	}
+
     public void likePosts(WebDriver driver, String profileUsername){
         int i =0;
         log.info("Starting likes for profile: " + profileUsername);
@@ -66,6 +75,8 @@ public class InstaParser {
 		followers = Utils.parseInt(profileInfos.get(1).getText());
 		following = Utils.parseInt(profileInfos.get(2).getText());
 		log.info(posts+"///"+followers+"///"+following);
+		String imgUrl = driver.findElement(By.className("_6q-tv")).getAttribute("src");
+		profile.update(followers, following, posts, imgUrl);
 		List<WebElement> postElements = driver.findElements(By.className("v1Nh3"));
 		ProfileStats stats =
 				ProfileStats.builder().posts(posts).followers(followers).following(following).time(Utils.fetchCurrentDate()).profile(profile).build();

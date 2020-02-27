@@ -28,4 +28,13 @@ public class InstaProfile {
     private int following;
     @Field("posts")
     private int posts;
+    @Field("img")
+    private String imgUrl;
+
+    public void update(int followers, int following, int posts, String imgUrl){
+        this.followers = followers;
+        this.following = following;
+        this.posts = posts;
+        this.imgUrl = imgUrl;
+    }
 }
