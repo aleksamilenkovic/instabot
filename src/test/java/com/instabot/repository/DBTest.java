@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.instabot.domain.InstaProfile;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -18,33 +20,37 @@ public class DBTest extends InstabotApplicationTests {
 	private InstaProfileRepository profileRepo;
 	@Autowired
 	private ProfileStatsRepository statsRepository;
+
 	@Test
-	public void testConnection() {
+	public void testFetchingProfile() {
 		InstaProfile profile = profileRepo.findByUsername("lezalekss");
 		assertEquals("lezalekss", profile.getUsername());
 	}
 
 	@Test
 	public void testInsertNewProfile(){
-		InstaProfile profile = InstaProfile.builder().username("kostasavic").followers(557).following(555).posts(15).build();
+		InstaProfile profile = InstaProfile.builder().username("TEST_PROFILE").build();
 		// saving profile into db
 		profileRepo.save(profile);
 		// fetch profile from db and check if equals
 		assertEquals("TEST_PROFILE", profileRepo.findByUsername("TEST_PROFILE").getUsername());
 		// deleting profile
-//		profileRepo.delete(profile);
+		profileRepo.delete(profile);
 	}
 
 	@Test
-	public void getStats(){
-		List<ProfileStats> stats = statsRepository.findAll();
-		stats.forEach(s ->{
-			System.out.println(s.getAverageLikes());
-			System.out.println(s.getProfile().getUsername());
-		});
+	public void profileStatsTest(){
+		InstaProfile profile = InstaProfile.builder().username("test").build();
+		assertNotNull(profileRepo.save(profile));
+		ProfileStats ps = ProfileStats.builder().posts(100).followers(600).following(200).averageLikes(122.22).time(LocalDateTime.now()).profile(profile).build();
+		assertNotNull(statsRepository.save(ps));
+		ProfileStats psFromDB = statsRepository.findTopByProfile_UsernameOrderByTimeDesc("test");
+		assertEquals(ps, psFromDB);
+		profileRepo.delete(profile);
+		statsRepository.delete(psFromDB);
 	}
 
-	@Test
+	/*@Test
 	public void findAllProfileStats(){
 		List<ProfileStats> stats = statsRepository.findAll();
 		stats.forEach(System.out::println);
@@ -56,5 +62,5 @@ public class DBTest extends InstabotApplicationTests {
 		InstaProfile ip = profileRepo.findByUsername("lezalekss");
 		ProfileStats ps = statsRepository.findTopByProfile_UsernameOrderByTimeDesc("lezalekss");
 		System.out.println(ps.toString());
-	}
+	}*/
 }

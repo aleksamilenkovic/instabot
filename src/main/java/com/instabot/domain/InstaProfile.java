@@ -1,5 +1,6 @@
 package com.instabot.domain;
 
+import com.google.common.base.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.data.annotation.Id;
@@ -8,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.index.Indexed;
 /**
  * @author lezalekss
  */
@@ -37,4 +37,13 @@ public class InstaProfile {
         this.posts = posts;
         this.imgUrl = imgUrl;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InstaProfile that = (InstaProfile) o;
+        return Objects.equal(username, that.username);
+    }
+
 }

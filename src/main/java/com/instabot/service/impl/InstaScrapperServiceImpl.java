@@ -15,12 +15,21 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author lezalekss
+ */
 @Service
 public class InstaScrapperServiceImpl implements InstaScrapperService {
     @Value("${profiles-json}")
     private String profilesJsonFile;
+    /**
+     * Instagram bot profile username. It's configured in application.properties
+     */
     @Value("${profile-username}")
     private String username;
+    /**
+     * Instagram bot profile password. It's configured in application.properties
+     */
     @Value("${profile-password}")
     private String password;
     @Autowired
