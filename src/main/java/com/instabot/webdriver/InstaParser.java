@@ -97,13 +97,14 @@ public class InstaParser {
 				post.click();
 				driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 				String[] text = driver.findElement(By.className("Nm9Fw")).getText().split(" ");
-				likes += (text[text.length - 2].equals("likes")) ?
+				int postLikes= (text[text.length - 2].equals("likes")) ?
 						Utils.parseInt(text[0])
 						: Utils.parseInt(text[text.length - 2]) + 1;
+				likes +=postLikes;
 				String dateTime = driver.findElement(By.className("_1o9PC")).getAttribute("datetime");
 				String postUrl = driver.getCurrentUrl();
 				String img = post.findElement(By.className("FFVAD")).getAttribute("src");
-				PostStats postStats = PostStats.builder().likes(likes).time(Utils.getDateFromString(dateTime)).url(postUrl).imgUrl(img).build();
+				PostStats postStats = PostStats.builder().likes(postLikes).time(Utils.getDateFromString(dateTime)).url(postUrl).imgUrl(img).build();
 				postsStats.add(postStats);
 				log.info(postStats.toString());
 			}catch (NoSuchElementException ex){
