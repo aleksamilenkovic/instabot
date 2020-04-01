@@ -29,13 +29,14 @@ public class DBTest extends InstabotApplicationTests {
 
 	@Test
 	public void testInsertNewProfile(){
-		InstaProfile profile = InstaProfile.builder().username("TEST_PROFILE").build();
+
+		InstaProfile profile = InstaProfile.builder().username("d_biilja").build();
 		// saving profile into db
 		profileRepo.save(profile);
 		// fetch profile from db and check if equals
 		assertEquals("TEST_PROFILE", profileRepo.findByUsername("TEST_PROFILE").getUsername());
 		// deleting profile
-		profileRepo.delete(profile);
+		//profileRepo.delete(profile);
 	}
 
 	@Test
