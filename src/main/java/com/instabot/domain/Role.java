@@ -3,6 +3,9 @@ package com.instabot.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @author lezalekss
+ */
 @Document(collection = "role")
 public class Role {
     @Id

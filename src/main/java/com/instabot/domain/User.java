@@ -9,6 +9,9 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author lezalekss
+ */
 @Document(collection = "user")
 public class User {
     @Id
