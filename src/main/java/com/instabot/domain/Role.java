@@ -11,13 +11,13 @@ public class Role {
     @Id
     private String id;
 
-    private ERole role;
+    private ERole name;
 
     public Role() {
     }
 
-    public Role(ERole role) {
-        this.role = role;
+    public Role(ERole name) {
+        this.name = name;
     }
 
     public String getId() {
@@ -28,11 +28,11 @@ public class Role {
         this.id = id;
     }
 
-    public ERole getRole() {
-        return role;
+    public ERole getName() {
+        return name;
     }
 
-    public void setRole(ERole role) {
-        this.role = role;
+    public void setName(ERole name) {
+        this.name = name;
     }
 }
