@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.</groupId>
 	<artifactId>instabot</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.1</version>
 	<name>instabot</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -87,6 +87,7 @@
                   <artifactId>spring-boot-maven-plugin</artifactId>
               </plugin>
           </plugins>
+		  <finalName>instabot</finalName>
       </build>
 
   </project>
