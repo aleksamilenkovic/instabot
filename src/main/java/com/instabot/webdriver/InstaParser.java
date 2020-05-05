@@ -22,9 +22,22 @@ import java.util.function.Consumer;
 @Component
 @Slf4j
 public class InstaParser {
+	/**
+	 * Template of instagram url
+	 */
 	private final String urlTemplate = "https://www.instagram.com/%s";
+	/**
+	 * Instagram login page url
+	 */
 	private final String loginUrl = "https://www.instagram.com/accounts/login/";
 
+	/**
+	 * Navigates trough selenimu to login with given username and password
+	 *
+	 * @param driver (loaded WebDriver)
+	 * @param username (bot profile username)
+	 * @param password (bot profile password)
+	 */
 	public void login(WebDriver driver, String username, String password) {
 		driver.navigate().to(loginUrl);
 		WebElement usernameInput = driver.findElement(By.name("username"));
@@ -33,7 +46,7 @@ public class InstaParser {
 		passwordInput.sendKeys(password);
 		passwordInput.sendKeys(Keys.ENTER);
 		try {
-			Thread.sleep(2500);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -48,6 +61,12 @@ public class InstaParser {
 		return null;
 	}
 
+	/**
+	 * Likes given posts
+	 *
+	 * @param driver (loaded WebDriver)
+	 * @param profileUsername (profile username as String)
+	 */
     public void likePosts(WebDriver driver, String profileUsername){
         int i =0;
         log.info("Starting likes for profile: " + profileUsername);
@@ -63,7 +82,14 @@ public class InstaParser {
         }
     }
 
-
+	/**
+	 * Collect basic info of profile and calls
+	 * setPostsStats()
+	 *
+	 * @param driver (loaded WebDriver)
+	 * @param profile (InstaProfile to set)
+	 * @return profile statistic as ProfileStats
+	 */
 	public ProfileStats collectStats(WebDriver driver, InstaProfile profile) {
 		int followers=0, following=0, posts=0; // driver will load first 12 posts or less
 		String profileUrl = String.format(urlTemplate, profile.getUsername());
@@ -84,7 +110,14 @@ public class InstaParser {
 		return stats;
 	}
 
-	public void setPostsStats(List<WebElement> postElements, WebDriver driver, ProfileStats stats){
+	/**
+	 * Collecting post stats post by post
+	 *
+	 * @param postElements (posts as list of WebElement)
+	 * @param driver (loaded driver as WebDriver)
+	 * @param stats (ProfileStats to set )
+	 */
+	private void setPostsStats(List<WebElement> postElements, WebDriver driver, ProfileStats stats){
 		Actions action = new Actions(driver);
 		Consumer< WebElement > hover = element -> {
 			action.moveToElement(element).build()
@@ -125,6 +158,12 @@ public class InstaParser {
 		stats.setAverageLikes((double)likes/postsNumber);
 	}
 
+	/**
+	 * Checks if post is liked
+	 * @param likeSpan (like span element which contains informations if it is liked)
+	 *
+	 * @return boolean true if it is liked and false if it's not
+	 */
 	private boolean isPostLiked(WebElement likeSpan) {
 		String svg = likeSpan.findElement(By.className("_8-yf5")).getAttribute("aria-label");
 		return !svg.equals("Like");

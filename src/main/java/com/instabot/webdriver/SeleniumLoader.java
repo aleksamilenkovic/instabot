@@ -19,12 +19,22 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SeleniumLoader {
-
+    /**
+     * path to chrome driver
+     */
     @Value("${chrome-driver}")
     private String CHROMEDRIVER_EXE;
+    /**
+     * path to user profile
+     */
     @Value("${user-profile}")
     private String USER_PROFILE;
 
+    /**
+     * loading driver with user profile
+     *
+     * @return loaded driver as WebDriver
+     */
     public WebDriver setProfile(){
         WebDriver driver;
 //        System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_EXE);
@@ -37,6 +47,11 @@ public class SeleniumLoader {
         return driver;
     }
 
+    /**
+     * Loading selenium WebDriver
+     *
+     * @return loaded driver as WebDriver
+     */
     public WebDriver setUp() {
         WebDriver driver;
         String driverFile = Utils.findFile(CHROMEDRIVER_EXE);
@@ -65,7 +80,10 @@ public class SeleniumLoader {
     }
 
 
-
+    /**
+     *  tear down the driver
+     * @param driver
+     */
     public void tearDown(WebDriver driver) {
         if (driver != null) {
             driver.quit();

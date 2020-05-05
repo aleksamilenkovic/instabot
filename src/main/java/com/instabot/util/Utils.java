@@ -22,6 +22,14 @@ import java.util.function.Consumer;
  * @author lezalekss
  */
 public class Utils {
+    /**
+     * Parsing json array
+     *
+     * @param resourceName as String
+     * @param arrayName as String
+     *
+     * @return List of Strings
+     */
     public static List<String> readJsonStringArray(String resourceName, String arrayName) throws IOException, ParseException {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader(findFile(resourceName)));
@@ -32,6 +40,13 @@ public class Utils {
         return list;
     }
 
+    /**
+     * Finding a path to file from resource
+     *
+     * @param fileName as String (name of the file)
+     *
+     * @return file pathname as String
+     */
     public static String findFile(String fileName) {
         ClassLoader classLoader = Utils.class.getClassLoader();
         URL url = classLoader.getResource(fileName);
@@ -39,6 +54,14 @@ public class Utils {
         return url.getFile();
     }
 
+    /**
+     * Parsing integer from String
+     * (for scrapping likes and followers)
+     *
+     * @param likesXfollowers (likes || followers to scrapp)
+     *
+     * @return likes || followers as int
+     */
     public static int parseInt(String likesXfollowers){
         int i=0;
         try{
@@ -48,13 +71,23 @@ public class Utils {
         }
         return i;
     }
-
+    /**
+     * Fetching current date
+     *
+     *
+     * @return data and time as LocalDateTime
+     */
     public static LocalDateTime fetchCurrentDate(){
         ZoneId zoneId = ZoneId.of("Europe/Paris");
-        System.out.println(LocalDateTime.now());
         return LocalDateTime.now(zoneId);
     }
-
+    /**
+     * Parsing date from scrapped text
+     *
+     * @param date (date as String)
+     *
+     * @return LocalDateTime
+     */
     public static LocalDateTime getDateFromString(String date){
         return LocalDateTime.parse(date.substring(0, date.length()-1));
     }
