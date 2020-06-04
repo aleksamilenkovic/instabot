@@ -49,7 +49,7 @@ public class InstaParser {
 
     private InstaProfile scrapProfile(JsonNode user, ProfileConfig profileConfig){
         boolean isPrivate = user.get("is_private").booleanValue();
-        String imgUrl = user.get("profile_pic_url_hd").toString();
+        String imgUrl = user.get("profile_pic_url_hd").asText();
         int followers = user.get("edge_followed_by").get("count").intValue();
         int following = user.get("edge_follow").get("count").intValue();
         int posts = user.get("edge_owner_to_timeline_media").get("count").intValue();
@@ -66,8 +66,8 @@ public class InstaParser {
             for(JsonNode node : posts){
                 node = node.get("node");
                 PostStats ps = new PostStats();
-                String imgUrl = node.get("thumbnail_src").toString();
-                String postUrl = postUrlTemplate + node.get("shortcode").toString();
+                String imgUrl = node.get("thumbnail_src").asText();
+                String postUrl = postUrlTemplate + node.get("shortcode").asText();
                 int likes = node.get("edge_liked_by").get("count").intValue();
                 int comments = node.get("edge_media_to_comment").get("count").intValue();
                 LocalDateTime time = Utils.getDateFromTimestamp(node.get("taken_at_timestamp").longValue());
