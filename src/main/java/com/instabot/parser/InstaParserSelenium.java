@@ -1,4 +1,4 @@
-package com.instabot.webdriver;
+package com.instabot.parser;
 
 import com.instabot.domain.InstaProfile;
 import com.instabot.domain.PostStats;
@@ -21,7 +21,7 @@ import java.util.function.Consumer;
  */
 @Component
 @Slf4j
-public class InstaParser {
+public class InstaParserSelenium {
 	private final String urlTemplate = "https://www.instagram.com/%s";
 	private final String loginUrl = "https://www.instagram.com/accounts/login/";
 	private final String profileInfoSuffix = "/?__a=1";

@@ -2,7 +2,9 @@ package com.instabot.rest;
 
 import com.instabot.domain.InstaProfile;
 import com.instabot.domain.ProfileStats;
+import com.instabot.rest.dto.request.ProfileConfig;
 import com.instabot.service.InstaCollectorService;
+import com.instabot.service.InstaScrapperService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +24,8 @@ public class BotApiController {
 
     @Autowired
     private InstaCollectorService instaCollectorService;
+    @Autowired
+    private InstaScrapperService instaScrapperService;
 
     @GetMapping("/get-profiles")
     @PreAuthorize("hasAuthority('USER') or hasAnyAuthority('ADMIN')")
@@ -38,4 +42,10 @@ public class BotApiController {
     }
 
 
+    @PostMapping("/scrap-new-profile")
+    @PreAuthorize("hasAuthority('USER') or hasAnyAuthority('ADMIN')")
+    public ProfileStats scrapNewProfile(@RequestBody ProfileConfig profileConfig){
+        log.info("Scrapping new instagram profile stats for user:" + profileConfig.getUsername());
+        return instaScrapperService.scrapNewProfile(profileConfig);
+    }
 }

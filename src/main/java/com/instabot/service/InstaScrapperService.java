@@ -1,6 +1,7 @@
 package com.instabot.service;
 
-import com.instabot.domain.InstaProfile;
+import com.instabot.domain.ProfileStats;
+import com.instabot.rest.dto.request.ProfileConfig;
 
 /**
  * @author lezalekss
@@ -11,5 +12,5 @@ public interface InstaScrapperService{
 
     void collectStats();
 
-    InstaProfile addProfile(String username, boolean toLike);
+    ProfileStats scrapNewProfile(ProfileConfig profileConfig);
 }

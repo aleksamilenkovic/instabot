@@ -3,6 +3,8 @@ package com.instabot;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.instabot.parser.InstaParser;
+import com.instabot.rest.dto.request.ProfileConfig;
 import com.instabot.service.InstaScrapperService;
 import com.instabot.webdriver.SeleniumLoader;
 import org.json.simple.JSONObject;
@@ -19,7 +21,8 @@ public class InstaScrapperServiceTest extends InstabotApplicationTests{
     private InstaScrapperService scrapperService;
     @Autowired
     private SeleniumLoader loader;
-
+    @Autowired
+    private InstaParser parser;
     @Test
     public void collectStats(){
         scrapperService.collectStats();
@@ -33,7 +36,8 @@ public class InstaScrapperServiceTest extends InstabotApplicationTests{
 
     @Test
     public void getLikesAndCommentsViaHover() {
-        scrapperService.addProfile("lezalekss", true);
+//        scrapperService.addProfile("lezalekss", true);
+        parser.scrapNewProfile(new ProfileConfig("therock", true,true));
     }
 
     @Test

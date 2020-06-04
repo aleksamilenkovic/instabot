@@ -11,11 +11,13 @@ import org.openqa.selenium.interactions.Actions;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.function.Consumer;
 
 /**
@@ -57,5 +59,9 @@ public class Utils {
 
     public static LocalDateTime getDateFromString(String date){
         return LocalDateTime.parse(date.substring(0, date.length()-1));
+    }
+
+    public static LocalDateTime getDateFromTimestamp(long timestamp){
+        return LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), TimeZone.getDefault().toZoneId());
     }
 }
