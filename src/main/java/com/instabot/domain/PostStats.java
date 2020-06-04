@@ -1,5 +1,7 @@
 package com.instabot.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -12,7 +14,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @NoArgsConstructor
-@SuperBuilder
+@AllArgsConstructor
+@Builder
 public class PostStats {
     @Field("uploaded_date")
     private LocalDateTime time;

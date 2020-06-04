@@ -24,6 +24,7 @@ import java.util.function.Consumer;
 public class InstaParser {
 	private final String urlTemplate = "https://www.instagram.com/%s";
 	private final String loginUrl = "https://www.instagram.com/accounts/login/";
+	private final String profileInfoSuffix = "/?__a=1";
 
 	public void login(WebDriver driver, String username, String password) {
 		driver.navigate().to(loginUrl);
@@ -76,7 +77,7 @@ public class InstaParser {
 		following = Utils.parseInt(profileInfos.get(2).getText());
 		log.info(posts+"///"+followers+"///"+following);
 		String imgUrl = driver.findElement(By.className("_6q-tv")).getAttribute("src");
-		profile.update(followers, following, posts, imgUrl);
+		profile.update(followers, following, posts, imgUrl, profile.isToLike(), profile.isPrivate());
 		List<WebElement> postElements = driver.findElements(By.className("v1Nh3"));
 		ProfileStats stats =
 				ProfileStats.builder().posts(posts).followers(followers).following(following).time(Utils.fetchCurrentDate()).profile(profile).build();

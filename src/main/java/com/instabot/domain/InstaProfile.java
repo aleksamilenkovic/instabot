@@ -30,12 +30,18 @@ public class InstaProfile {
     private int posts;
     @Field("img")
     private String imgUrl;
+    @Field("to_like")
+    private boolean toLike;
+    @Field("is_private")
+    private boolean isPrivate;
 
-    public void update(int followers, int following, int posts, String imgUrl){
+    public void update(int followers, int following, int posts, String imgUrl, boolean toLike, boolean isPrivate){
         this.followers = followers;
         this.following = following;
         this.posts = posts;
         this.imgUrl = imgUrl;
+        this.toLike = toLike;
+        this.isPrivate = isPrivate;
     }
 
     @Override

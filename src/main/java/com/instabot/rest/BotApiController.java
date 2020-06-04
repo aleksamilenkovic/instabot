@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lezalekss
@@ -23,16 +24,18 @@ public class BotApiController {
     private InstaCollectorService instaCollectorService;
 
     @GetMapping("/get-profiles")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER') or hasAnyAuthority('ADMIN')")
     public List<InstaProfile> getProfiles(){
         log.info("Getting instagram profiles");
         return instaCollectorService.getAllProfiles();
     }
 
     @GetMapping("/get-profile-stats/{username}")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER') or hasAnyAuthority('ADMIN')")
     public ProfileStats getProfileStats(@PathVariable String username){
         log.info("Getting instagram profile stats for user:" + username);
         return instaCollectorService.getProfileStatsForProfile(username);
     }
+
+
 }
