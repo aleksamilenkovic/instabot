@@ -58,28 +58,38 @@ public class InstaScrapperServiceImpl implements InstaScrapperService {
     @Override
     public void startLikes() {
         WebDriver driver = loader.setUp();
-        instaParserSelenium.login(driver, username, password);
-        getProfiles().forEach(profile-> instaParserSelenium.likePosts(driver, profile.getUsername()));
-        loader.tearDown(driver);
+        try {
+            instaParserSelenium.login(driver, username, password);
+            getProfiles().stream().filter(InstaProfile::isToLike).forEach(profile -> instaParserSelenium.likePosts(driver, profile.getUsername()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            loader.tearDown(driver);
+        }
     }
 
     @Override
     @Transactional
     public void collectStats() {
         WebDriver driver = loader.setUp();
-        instaParserSelenium.login(driver, username, password);
-        getProfiles().stream().map(profile -> instaParserSelenium.collectStats(driver, profile)).forEach(stats -> {
-            profileRepository.save(stats.getProfile());
-            profileStatsRepository.save(stats);
-        });
-        loader.tearDown(driver);
+        try {
+            instaParserSelenium.login(driver, username, password);
+            getProfiles().stream().map(profile -> instaParserSelenium.collectStats(driver, profile)).forEach(stats -> {
+                profileRepository.save(stats.getProfile());
+                profileStatsRepository.save(stats);
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            loader.tearDown(driver);
+        }
     }
 
     @Override
     public ProfileStats scrapNewProfile(ProfileConfig profileConfig) {
         ProfileStats profileStats = instaParser.scrapNewProfile(profileConfig);
         if(profileStats!=null)
-            saveProfileStatsAsync(profileStats);
+            saveProfileStatsAsync(profileStats, profileConfig.isToFollow());
         return profileStats;
     }
 
@@ -96,8 +106,9 @@ public class InstaScrapperServiceImpl implements InstaScrapperService {
     }
 
     @Async
-    void saveProfileStatsAsync(ProfileStats stats){
-        profileRepository.save(stats.getProfile());
+    void saveProfileStatsAsync(ProfileStats stats, boolean toFollow){
+        if(toFollow)
+            profileRepository.save(stats.getProfile());
         if(stats.getPostsStats()!=null)
             profileStatsRepository.save(stats);
     }

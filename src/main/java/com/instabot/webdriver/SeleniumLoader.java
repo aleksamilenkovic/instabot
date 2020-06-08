@@ -39,7 +39,7 @@ public class SeleniumLoader {
 
     public WebDriver setUp() {
         WebDriver driver;
-        String driverFile = Utils.findFile(CHROMEDRIVER_EXE);
+        String driverFile = Utils.findResourceFile(CHROMEDRIVER_EXE);
 //        System.setProperty("webdriver.chrome.driver", driverFile);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         ChromeDriverService service = new ChromeDriverService.Builder()
