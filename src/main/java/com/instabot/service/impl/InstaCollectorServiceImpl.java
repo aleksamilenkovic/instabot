@@ -36,5 +36,17 @@ public class InstaCollectorServiceImpl implements InstaCollectorService {
         return profileStatsRepository.findTopByProfile_UsernameOrderByTimeDesc(username);
     }
 
+    @Override
+    public InstaProfile updateProfile(InstaProfile profile) throws Exception {
+        if(profile!=null)
+            return instaProfileRepository.save(profile);
+        throw new Exception("Profile is empty");
+    }
+
+    @Override
+    public void deleteProfile(String username) {
+        instaProfileRepository.deleteById(username);
+    }
+
 
 }
