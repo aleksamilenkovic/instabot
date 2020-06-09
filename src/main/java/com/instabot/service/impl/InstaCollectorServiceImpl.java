@@ -6,6 +6,7 @@ import com.instabot.repository.InstaProfileRepository;
 import com.instabot.repository.ProfileStatsRepository;
 import com.instabot.service.InstaCollectorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class InstaCollectorServiceImpl implements InstaCollectorService {
     private ProfileStatsRepository profileStatsRepository;
 
     @Override
+    @Cacheable("profiles")
     public List<InstaProfile> getAllProfiles() {
         return instaProfileRepository.findAll();
     }
