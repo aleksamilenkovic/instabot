@@ -73,7 +73,7 @@ public class InstaParserSelenium {
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		List<WebElement> profileInfos = driver.findElements(By.className("g47SY"));
 		posts = Utils.parseInt(profileInfos.get(0).getText());
-		followers = Utils.parseInt(profileInfos.get(1).getText());
+		followers = Utils.parseInt(profileInfos.get(1).getAttribute("tittle"));
 		following = Utils.parseInt(profileInfos.get(2).getText());
 		log.info(posts+"///"+followers+"///"+following);
 		String imgUrl = driver.findElement(By.className("_6q-tv")).getAttribute("src");

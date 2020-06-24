@@ -6,6 +6,7 @@ import com.instabot.repository.InstaProfileRepository;
 import com.instabot.repository.ProfileStatsRepository;
 import com.instabot.service.InstaCollectorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class InstaCollectorServiceImpl implements InstaCollectorService {
     private ProfileStatsRepository profileStatsRepository;
 
     @Override
-    @Cacheable("profiles")
+    @Cacheable(value = "profiles")
     public List<InstaProfile> getAllProfiles() {
         return instaProfileRepository.findAll();
     }
@@ -39,6 +40,7 @@ public class InstaCollectorServiceImpl implements InstaCollectorService {
     }
 
     @Override
+    @CacheEvict(value = "profiles", allEntries = true)
     public InstaProfile updateProfile(InstaProfile profile) throws Exception {
         if(profile!=null)
             return instaProfileRepository.save(profile);
@@ -46,9 +48,14 @@ public class InstaCollectorServiceImpl implements InstaCollectorService {
     }
 
     @Override
-    public void deleteProfile(String username) {
-        instaProfileRepository.deleteById(username);
+    @CacheEvict(value = "profiles", allEntries = true)
+    public void deleteProfile(InstaProfile profile) {
+        instaProfileRepository.deleteById(profile.getUsername());
     }
 
+    @CacheEvict(value = "profiles", allEntries = true)
+    public InstaProfile saveProfile(InstaProfile profile){
+        return instaProfileRepository.save(profile);
+    }
 
 }

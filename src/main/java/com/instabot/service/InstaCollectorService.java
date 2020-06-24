@@ -18,5 +18,7 @@ public interface InstaCollectorService {
 
     InstaProfile updateProfile(InstaProfile profile) throws Exception;
 
-    void deleteProfile(String username);
+    void deleteProfile(InstaProfile profile);
+
+    InstaProfile saveProfile(InstaProfile profile);
 }

@@ -9,6 +9,7 @@ import com.instabot.parser.InstaParser;
 import com.instabot.repository.InstaProfileRepository;
 import com.instabot.repository.ProfileStatsRepository;
 import com.instabot.rest.dto.request.ProfileConfig;
+import com.instabot.service.InstaCollectorService;
 import com.instabot.service.InstaScrapperService;
 import com.instabot.parser.InstaParserSelenium;
 import com.instabot.webdriver.SeleniumLoader;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -54,6 +56,8 @@ public class InstaScrapperServiceImpl implements InstaScrapperService {
     private ProfileStatsRepository profileStatsRepository;
     @Autowired
     private InstaParser instaParser;
+    @Autowired
+    private InstaCollectorService collectorService;
 
     @Override
     public void startLikes() {
@@ -75,7 +79,7 @@ public class InstaScrapperServiceImpl implements InstaScrapperService {
         try {
             instaParserSelenium.login(driver, username, password);
             getProfiles().stream().map(profile -> instaParserSelenium.collectStats(driver, profile)).forEach(stats -> {
-                profileRepository.save(stats.getProfile());
+                collectorService.saveProfile(stats.getProfile());
                 profileStatsRepository.save(stats);
             });
         }catch (Exception e){
@@ -108,8 +112,9 @@ public class InstaScrapperServiceImpl implements InstaScrapperService {
     @Async
     void saveProfileStatsAsync(ProfileStats stats, boolean toFollow){
         if(toFollow)
-            profileRepository.save(stats.getProfile());
+            collectorService.saveProfile(stats.getProfile());
         if(stats.getPostsStats()!=null)
             profileStatsRepository.save(stats);
     }
+
 }

@@ -53,7 +53,7 @@ public class BotApiController {
     @GetMapping("/delete-profile/{username}")
     @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     public boolean deleteProfile(@PathVariable String username){
-        instaCollectorService.deleteProfile(username);
+        instaCollectorService.deleteProfile(InstaProfile.builder().username(username).build());
         log.info(username + " - profile deleted");
         return true;
     }
