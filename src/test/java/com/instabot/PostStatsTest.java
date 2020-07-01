@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 /**
  * @author lezalekss
  */
-public class PostStatsTest extends InstabotApplicationTests{
+public class PostStatsTest {
     private PostStats postStats;
 
     @Before

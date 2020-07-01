@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * @author lezalekss
+ * Represents main rest api for instabot dashboard app and provides specific services.
+ *
  */
 @Slf4j
 @CrossOrigin

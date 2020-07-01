@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author lezalekss
+ * Represents post statistic from ProfileStats with post's basic informations.
  */
 @Builder
 public class PostStats {
@@ -128,4 +129,12 @@ public class PostStats {
     }
 
     public PostStats(){}
+
+    public PostStats(LocalDateTime time, int likes, int comments, String url, String imgUrl) {
+        this.time = time;
+        this.likes = likes;
+        this.comments = comments;
+        this.url = url;
+        this.imgUrl = imgUrl;
+    }
 }

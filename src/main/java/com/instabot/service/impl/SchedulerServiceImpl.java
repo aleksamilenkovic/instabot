@@ -14,9 +14,17 @@ import java.util.Date;
  */
 @Slf4j
 public class SchedulerServiceImpl implements SchedulerService {
+    /**
+     * Instagram scrapper service
+     */
     @Autowired
     private InstaScrapperService instaService;
 
+    /**
+     * Method that calls InstaScrapperService
+     * to start liking for given profiles
+     *
+     */
     @Scheduled(cron = "0 0 12 * * ?")
     @Override
     public void startInstaLikeService() {
@@ -25,6 +33,11 @@ public class SchedulerServiceImpl implements SchedulerService {
         log.info("Liking finished at the : " + Calendar.getInstance().getTime());
     }
 
+    /**
+     * Method that calls InstaScrapperService
+     * to start collecting statistic for given profiles
+     *
+     */
     @Scheduled(cron = "0 10 12 * * ?")
     @Override
     public void startCollectingStats() {

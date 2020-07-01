@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author lezalekss
+ * Class that loads and tears down selenium chrome WebDriver.
+ *
  */
 @Component
 public class SeleniumLoader {
@@ -50,6 +52,7 @@ public class SeleniumLoader {
     /**
      * Loading selenium WebDriver
      *
+     * @throws org.openqa.selenium.SessionNotCreatedException when driver is not suitable
      * @return loaded driver as WebDriver
      */
     public WebDriver setUp() {

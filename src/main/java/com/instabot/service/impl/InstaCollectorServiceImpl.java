@@ -12,25 +12,55 @@ import java.util.List;
 
 /**
  * @author lezalekss
+ *
+ * Represents implementation of the InstaCollectorService interface
+ * and provide services for fetching from database instagram informations
+ * to serve for BotApiController
  */
 @Service
 public class InstaCollectorServiceImpl implements InstaCollectorService {
 
+    /**
+     * Instagram profile repository that fetchs from db
+     */
     @Autowired
     private InstaProfileRepository instaProfileRepository;
+    /**
+     * Instagram profile stats repository that fetchs from db
+     */
     @Autowired
     private ProfileStatsRepository profileStatsRepository;
 
+    /**
+     *
+     *  Fetching all insta profiles from InstaProfileRepository
+     *
+     * @return List<InstaProfile> all instagram profiles as List
+     */
     @Override
     public List<InstaProfile> getAllProfiles() {
         return instaProfileRepository.findAll();
     }
-
+    /**
+     *
+     *  Fetching all profiles statistic from ProfileStatsRepository
+     *
+     * @param username (profile username as String)
+     *
+     * @return profiles statistic as List of ProfileStats
+     */
     @Override
     public List<ProfileStats> getAllProfileStatsForProfile(String username) {
         return profileStatsRepository.findAllByProfile_UsernameOrderByTimeDesc(username);
     }
-
+    /**
+     *
+     *  Fetching profile statistic from ProfileStatsRepository
+     *
+     * @param username (profile username as String)
+     *
+     * @return statistic for given profile as ProfileStats
+     */
     @Override
     public ProfileStats getProfileStatsForProfile(String username) {
         return profileStatsRepository.findTopByProfile_UsernameOrderByTimeDesc(username);

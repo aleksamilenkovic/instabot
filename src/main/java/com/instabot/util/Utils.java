@@ -14,12 +14,15 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 /**
  * @author lezalekss
+ * This is a util class that provides general use cases like conversion etc.
+ *
  */
 public class Utils {
     /**
@@ -45,6 +48,7 @@ public class Utils {
      *
      * @param fileName as String (name of the file)
      *
+     * @throws  IOException
      * @return file pathname as String
      */
     public static String findFile(String fileName) {
@@ -59,7 +63,7 @@ public class Utils {
      * (for scrapping likes and followers)
      *
      * @param likesXfollowers (likes || followers to scrapp)
-     *
+     * @throws NumberFormatException in that case returns 0
      * @return likes || followers as int
      */
     public static int parseInt(String likesXfollowers){
@@ -86,6 +90,7 @@ public class Utils {
      *
      * @param date (date as String)
      *
+     * @throws DateTimeParseException if the text cannot be parsed
      * @return LocalDateTime
      */
     public static LocalDateTime getDateFromString(String date){

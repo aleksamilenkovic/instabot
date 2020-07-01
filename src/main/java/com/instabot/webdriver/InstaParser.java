@@ -18,6 +18,10 @@ import java.util.function.Consumer;
 
 /**
  * @author lezalekss
+ *
+ * Class that represents parser - instagram scrapper to provide services
+ * such as liking, scrapping, etc.
+ *
  */
 @Component
 @Slf4j
@@ -32,11 +36,15 @@ public class InstaParser {
 	private final String loginUrl = "https://www.instagram.com/accounts/login/";
 
 	/**
-	 * Navigates trough selenimu to login with given username and password
+	 * Navigates trough selenium to login with given username and password
 	 *
 	 * @param driver (loaded WebDriver)
 	 * @param username (bot profile username)
 	 * @param password (bot profile password)
+	 *
+	 * @throws NoSuchElementException If no matching elements are found
+	 *
+	 * @throws IllegalArgumentException if keysToSend is null
 	 */
 	public void login(WebDriver driver, String username, String password) {
 		driver.navigate().to(loginUrl);
@@ -66,6 +74,10 @@ public class InstaParser {
 	 *
 	 * @param driver (loaded WebDriver)
 	 * @param profileUsername (profile username as String)
+	 *
+	 * @throws NoSuchElementException If no matching elements are found
+	 * @throws StaleElementReferenceException If the element no longer exists as initially defined
+	 *
 	 */
     public void likePosts(WebDriver driver, String profileUsername){
         int i =0;
@@ -88,6 +100,8 @@ public class InstaParser {
 	 *
 	 * @param driver (loaded WebDriver)
 	 * @param profile (InstaProfile to set)
+	 *
+	 * @throws NoSuchElementException If no matching elements are found
 	 * @return profile statistic as ProfileStats
 	 */
 	public ProfileStats collectStats(WebDriver driver, InstaProfile profile) {
@@ -116,6 +130,8 @@ public class InstaParser {
 	 * @param postElements (posts as list of WebElement)
 	 * @param driver (loaded driver as WebDriver)
 	 * @param stats (ProfileStats to set )
+	 *
+	 * @throws NoSuchElementException If no matching elements are found
 	 */
 	private void setPostsStats(List<WebElement> postElements, WebDriver driver, ProfileStats stats){
 		Actions action = new Actions(driver);
@@ -162,6 +178,7 @@ public class InstaParser {
 	 * Checks if post is liked
 	 * @param likeSpan (like span element which contains informations if it is liked)
 	 *
+	 * @throws NoSuchElementException If no matching elements are found
 	 * @return boolean true if it is liked and false if it's not
 	 */
 	private boolean isPostLiked(WebElement likeSpan) {

@@ -4,18 +4,23 @@ import com.instabot.domain.InstaProfile;
 import com.instabot.domain.PostStats;
 import com.instabot.domain.ProfileStats;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 /**
  * @author lezalekss
  */
-public class ProfileStatsTest extends InstabotApplicationTests{
+public class ProfileStatsTest {
     private ProfileStats profileStats;
 
     @Before
@@ -49,7 +54,7 @@ public class ProfileStatsTest extends InstabotApplicationTests{
     @Test
     public void testSetAverageLikes(){
         profileStats.setAverageLikes(102.2d);
-        assertEquals(102.2d, profileStats.getAverageLikes());
+        Assert.assertEquals(102.2d, profileStats.getAverageLikes(), 1);
     }
 
     @Test
@@ -85,8 +90,9 @@ public class ProfileStatsTest extends InstabotApplicationTests{
 
     @Test
     public void testSetPostsStats(){
-        assertEquals(0, profileStats.getPostsStats().size());
-        profileStats.getPostsStats().add(new PostStats());
-        assertEquals(1, profileStats.getPostsStats().size());
+        assertNull(profileStats.getPostsStats());
+        List<PostStats> postStats = new ArrayList<>((Arrays.asList(new PostStats(), new PostStats())));
+        profileStats.setPostsStats(postStats);
+        assertEquals(2, profileStats.getPostsStats().size());
     }
 }

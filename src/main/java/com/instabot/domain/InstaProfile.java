@@ -11,6 +11,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 /**
  * @author lezalekss
+ * Represents instagram profile with crud informations about profile
+ *  -> informations that everyone can see
  */
 @Builder
 @Document(collection = "profile")

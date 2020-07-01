@@ -17,6 +17,10 @@ import java.util.List;
 
 /**
  * @author lezalekss
+ *
+ * Class that represents instagram scrapper service.
+ * So practicly it calls parser to scrapp, call repository and returns data
+ *
  */
 @Service
 public class InstaScrapperServiceImpl implements InstaScrapperService {
@@ -32,15 +36,32 @@ public class InstaScrapperServiceImpl implements InstaScrapperService {
      */
     @Value("${profile-password}")
     private String password;
+    /**
+     * *SeleniumLoader that loads web driver
+     */
     @Autowired
     private SeleniumLoader loader;
+    /**
+     * InstaParser for parsing instagram informations
+     */
     @Autowired
     private InstaParser instaParser;
+    /**
+     * Database connection for Instagram profile
+     */
     @Autowired
     private InstaProfileRepository profileRepository;
+    /**
+     * Database connection for Instagram profile statistic
+     */
     @Autowired
     private ProfileStatsRepository profileStatsRepository;
 
+    /**
+     *
+     * Liking profiles that instagram bot follows
+     *
+     */
     @Override
     public void startLikes() {
         WebDriver driver = loader.setUp();
@@ -48,7 +69,12 @@ public class InstaScrapperServiceImpl implements InstaScrapperService {
         getProfiles().forEach(profile-> instaParser.likePosts(driver, profile.getUsername()));
         loader.tearDown(driver);
     }
-
+    /**
+     *
+     * Collecting statistic for profiles
+     * that instagram bot follows
+     *
+     */
     @Override
     @Transactional
     public void collectStats() {

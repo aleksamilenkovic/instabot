@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author lezalekss
  */
-public class InstaProfileTest extends InstabotApplicationTests {
+public class InstaProfileTest  {
     private InstaProfile profile;
 
     @Before
