@@ -1,6 +1,8 @@
 package com.instabot.webdriver;
 
 import com.instabot.InstabotApplicationTests;
+import com.instabot.domain.InstaProfile;
+import com.instabot.domain.ProfileStats;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -25,22 +27,35 @@ public class InstaParserTest extends InstabotApplicationTests {
     public void instaLoginTest(){
         driver = loader.setUp();
         instaParser.login(driver, username, password);
-        String url = driver.getCurrentUrl();
+        String tittle = driver.getTitle();
         loader.tearDown(driver);
         // if login is sucessful it will go to homepage instagram.com not login page
-        assertEquals("https://www.instagram.com/", url);
+        assertEquals("Instagram", tittle);
     }
 
     @Test
     public void instaLoginFail(){
         driver = loader.setUp();
         instaParser.login(driver, "wrongname", "wrongpassword");
-        String url = driver.getCurrentUrl();
+        String tittle = driver.getTitle();
         loader.tearDown(driver);
         // if login is sucessful it will go to homepage instagram.com not login page
-        assertEquals("https://www.instagram.com/accounts/login/", url);
-
+        assertEquals("Login • Instagram", tittle);
     }
+
+    @Test
+    public void profileParse(){
+        driver = loader.setUp();
+        instaParser.login(driver, username, password);
+        InstaProfile profile = new InstaProfile();
+        profile.setUsername("lezalekss");
+        ProfileStats stats = instaParser.collectStats(driver, profile);
+        assertTrue(stats.getAverageLikes()>0);
+        assertTrue(stats.getPosts()>0);
+        assertNotNull(stats.getPostsStats());
+        assertEquals("lezalekss", stats.getProfile().getUsername());
+    }
+
     @After
     public void tearDownDriver(){loader.tearDown(driver);}
 }
