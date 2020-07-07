@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * @author lezalekss
  * Class that loads and tears down selenium chrome WebDriver.
  *
+ * @author lezalekss
  */
 @Component
 public class SeleniumLoader {

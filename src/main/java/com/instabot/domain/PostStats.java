@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.time.LocalDateTime;
 
 /**
- * @author lezalekss
  * Represents post statistic from ProfileStats with post's basic informations.
+ * @author lezalekss
  */
 @Builder
 public class PostStats {

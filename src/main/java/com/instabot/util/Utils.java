@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * @author lezalekss
  * This is a util class that provides general use cases like conversion etc.
  *
+ * @author lezalekss
  */
 public class Utils {
     /**

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @author lezalekss
  * Represents main rest api for instabot dashboard app and provides specific services.
  *
+ * @author lezalekss
  */
 @Slf4j
 @CrossOrigin

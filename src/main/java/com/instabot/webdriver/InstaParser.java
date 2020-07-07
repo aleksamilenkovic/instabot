@@ -17,10 +17,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 /**
- * @author lezalekss
- *
  * Class that represents parser - instagram scrapper to provide services
  * such as liking, scrapping, etc.
+ *
+ * @author lezalekss
  *
  */
 @Component

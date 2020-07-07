@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * Class that schedule and call services at certain time
  * @author lezalekss
  */
 @Slf4j

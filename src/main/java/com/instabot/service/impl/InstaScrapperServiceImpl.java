@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author lezalekss
  *
  * Class that represents instagram scrapper service.
  * So practicly it calls parser to scrapp, call repository and returns data
  *
+ * @author lezalekss
  */
 @Service
 public class InstaScrapperServiceImpl implements InstaScrapperService {

@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author lezalekss
- *
  * Represents implementation of the InstaCollectorService interface
  * and provide services for fetching from database instagram informations
  * to serve for BotApiController
+ * @author lezalekss
+ *
  */
 @Service
 public class InstaCollectorServiceImpl implements InstaCollectorService {

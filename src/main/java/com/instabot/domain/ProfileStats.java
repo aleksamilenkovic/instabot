@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @author lezalekss
  * Represents instagram profile statistics with statistic by post.
  * It is scrapped at certain time.
+ * @author lezalekss
  */
 @Builder
 @Document(collection = "profile_stats")
