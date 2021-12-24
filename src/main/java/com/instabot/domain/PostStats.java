@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
@@ -27,4 +27,7 @@ public class PostStats {
     private String url;
     @Field("img")
     private String imgUrl;
+    @ToString.Exclude
+    @Field("image")
+    private byte[] image;
 }

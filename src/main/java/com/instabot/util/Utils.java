@@ -5,8 +5,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -56,5 +60,21 @@ public class Utils {
 
     public static LocalDateTime getDateFromTimestamp(long timestamp){
         return LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), TimeZone.getDefault().toZoneId());
+    }
+
+    public static byte[] convertImageToByte(String imgUrl)  {
+        try {
+            URL url = new URL(imgUrl);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            InputStream is = new BufferedInputStream(url.openStream());
+            byte[] byteChunk = new byte[4096];
+            int n;
+            while ( (n = is.read(byteChunk)) > 0 ) {
+                baos.write(byteChunk, 0, n);
+            }
+            return baos.toByteArray();
+        }
+        catch (IOException e) {e.printStackTrace ();}
+        return null;
     }
 }

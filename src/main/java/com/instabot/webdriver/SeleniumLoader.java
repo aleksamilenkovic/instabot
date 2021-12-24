@@ -1,8 +1,6 @@
 package com.instabot.webdriver;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import com.instabot.util.Utils;
@@ -37,7 +35,7 @@ public class SeleniumLoader {
         return driver;
     }
 
-    public WebDriver setUp() {
+    /*public WebDriver setUp() {
         WebDriver driver;
         String driverFile = Utils.findResourceFile(CHROMEDRIVER_EXE);
 //        System.setProperty("webdriver.chrome.driver", driverFile);
@@ -60,6 +58,23 @@ public class SeleniumLoader {
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.merge(capabilities);
         driver = new ChromeDriver(service, options);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        return driver;
+    }*/
+
+    public WebDriver setUp() {
+        WebDriver driver;
+        String driverFile = Utils.findResourceFile(CHROMEDRIVER_EXE);
+        System.setProperty("webdriver.chrome.driver", driverFile);
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        ChromeDriverService service = new ChromeDriverService.Builder()
+                .usingDriverExecutable(new File(driverFile))
+                .build();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-infobars"); // disabling infobars
+        options.addArguments("--start-fullscreen");
+        options.merge(capabilities);
+        driver = new ChromeDriver(options );
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
     }

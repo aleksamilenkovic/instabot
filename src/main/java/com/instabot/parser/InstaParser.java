@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import static com.instabot.util.Utils.convertImageToByte;
+
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,7 +39,7 @@ public class InstaParser {
             user = (new ObjectMapper()).readTree(Objects.requireNonNull(response.getBody())).get("graphql").get("user");
             InstaProfile profile = scrapProfile(user, profileConfig);
             profileStats.setProfile(profile);
-            } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             log.error(e.getMessage());
             throw new RuntimeException("Error with parsing json from instagram api for user: " +profileConfig.getUsername());
         }
@@ -53,8 +55,15 @@ public class InstaParser {
         int followers = user.get("edge_followed_by").get("count").intValue();
         int following = user.get("edge_follow").get("count").intValue();
         int posts = user.get("edge_owner_to_timeline_media").get("count").intValue();
-        InstaProfile profile = InstaProfile.builder().
-                username(profileConfig.getUsername()).isPrivate(isPrivate).toLike(profileConfig.isToLike()).imgUrl(imgUrl).followers(followers).following(following).posts(posts).build();
+        InstaProfile profile = InstaProfile.builder()
+                .username(profileConfig.getUsername())
+                .isPrivate(isPrivate)
+                .toLike(profileConfig.isToLike())
+                .imgUrl(imgUrl).followers(followers)
+                .following(following)
+                .posts(posts)
+                .image(convertImageToByte(imgUrl))
+                .build();
         return profile;
     }
 
@@ -71,7 +80,7 @@ public class InstaParser {
                 int likes = node.get("edge_liked_by").get("count").intValue();
                 int comments = node.get("edge_media_to_comment").get("count").intValue();
                 LocalDateTime time = Utils.getDateFromTimestamp(node.get("taken_at_timestamp").longValue());
-                postStats.add(PostStats.builder().time(time).imgUrl(imgUrl).url(postUrl).likes(likes).comments(comments).build());
+                postStats.add(PostStats.builder().time(time).imgUrl(imgUrl).url(postUrl).likes(likes).comments(comments).image(convertImageToByte(imgUrl)).build());
                 sumLikes+=likes;
                 recentPosts++;
             }

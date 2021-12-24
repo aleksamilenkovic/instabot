@@ -3,12 +3,16 @@ package com.instabot.domain;
 import com.google.common.base.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import static com.instabot.util.Utils.convertImageToByte;
+
 /**
  * @author lezalekss
  */
@@ -34,6 +38,9 @@ public class InstaProfile {
     private boolean toLike;
     @Field("is_private")
     private boolean isPrivate;
+    @ToString.Exclude
+    @Field("image")
+    private byte[] image;
 
     public void update(int followers, int following, int posts, String imgUrl, boolean toLike, boolean isPrivate){
         this.followers = followers;
@@ -42,6 +49,7 @@ public class InstaProfile {
         this.imgUrl = imgUrl;
         this.toLike = toLike;
         this.isPrivate = isPrivate;
+        this.image = convertImageToByte(imgUrl);
     }
 
     @Override

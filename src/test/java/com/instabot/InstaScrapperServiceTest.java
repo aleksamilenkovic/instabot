@@ -10,11 +10,13 @@ import com.instabot.webdriver.SeleniumLoader;
 import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class InstaScrapperServiceTest extends InstabotApplicationTests{
     @Autowired
@@ -42,12 +44,8 @@ public class InstaScrapperServiceTest extends InstabotApplicationTests{
 
     @Test
     public void test() throws InterruptedException {
-//        String path = System.getProperty("user.dir");
-//        System.setProperty("webdriver.chrome.driver", path+"\\src\\test\\resources\\chromedriver.exe");
-//        WebDriver driver = new ChromeDriver();
         WebDriver driver = loader.setUp();
         driver.get("https://www.google.com/");
-
         Thread.sleep(2000);
         driver.quit();
     }
