@@ -26,7 +26,7 @@ import java.util.Objects;
 @Slf4j
 @Component
 public class InstaParser {
-    private final String profileInfoApi = "https://www.instagram.com/%s/?__a=1";
+    private final String profileInfoApi = "https://www.instagram.com/%s/channel/?__a=1";
     private final String postUrlTemplate = "https://www.instagram.com/p/";
 
     public ProfileStats scrapNewProfile(ProfileConfig profileConfig){
